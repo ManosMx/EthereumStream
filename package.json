@@ -1,0 +1,21 @@
+{
+  "name": "EthereumStream",
+  "version": "1.0.0",
+  "description": "A simple streamer-subscriber smart contract project",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Manos Chatzidakis",
+  "license": "MIT",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "mocha": "^5.2.0",
+    "openzeppelin-solidity": "1.10.0"
+  }
+}
