@@ -73,7 +73,7 @@ contract('Streamer',function([owner,from,to]){
 
 		it('can donate', async function(){
 
-			const value = await this.streamer.donate(10, { from: from })
+			const value = await this.streamer.donateToken('I can donate',10, { from: from })
 		});
 
 		it('can refund donation', async function(){
