@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple streamer-subscriber smart contract project",
   "main": "truffle-config.js",
+  "repository": "ManosMx/EthereumStream",
   "directories": {
     "test": "test"
   },

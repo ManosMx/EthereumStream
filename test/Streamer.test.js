@@ -88,7 +88,7 @@ contract('Streamer',function([owner,from,to,newstrm]){
 
 			it('bans work', async function(){
 				const user = 'Manos';
-				await this.streamer.subscribe(user, { value: 1e+18, from: to })
+				await this.streamer.subscribe(user, { value: 20, from: to })
 				const value = await this.streamer.banSubscriber(to, { from: owner })
 			});
 
