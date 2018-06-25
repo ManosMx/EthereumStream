@@ -81,3 +81,7 @@ typings/
 
 # migrations folder
 /migrations/*
+
+*.txt
+
+/.next./*
