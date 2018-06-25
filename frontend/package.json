@@ -1,0 +1,39 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Manos Chatzidakis",
+  "license": "MIT",
+  "description": "A simple streamer-subscriber smart contract project",
+  "main": "index.js",
+  "repository": "ManosMx/EthereumStream",
+  "dependencies": {
+    "connected-react-router": "^4.3.0",
+    "eth-block-tracker-es5": "^2.3.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-scripts": "^1.1.4",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "redux-thunk": "^2.3.0",
+    "web3": "^1.0.0-beta.34"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "deepmerge": "^2.1.1",
+    "drizzle": "^1.2.1",
+    "drizzle-react": "^1.1.1",
+    "drizzle-react-components": "^1.1.0",
+    "history": "^4.7.2",
+    "immutable": "^3.8.2",
+    "is-plain-object": "^2.0.4",
+    "prop-types": "^15.6.2",
+    "webpack": "^3.12.0"
+  }
+}
