@@ -79,9 +79,6 @@ typings/
 # node modules
 /node_modules/*
 
-# migrations folder
-/migrations/*
-
 *.txt
 
 /.next./*

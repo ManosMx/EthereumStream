@@ -1,8 +1,8 @@
-import React from 'react';
-import getWeb3 from './getWeb3';
-import getAccounts from './getAccounts';
-import getContract from './getContract';
-import StreamerFactory from '../../../build/contracts/StreamerFactory.json';
+import React from 'react'
+import getWeb3 from './getWeb3'
+import getAccounts from './getAccounts'
+import getContract from './getContract'
+import Streamer from '../../build/contracts/Streamer.json'
 
 export default class Web3Container extends React.Component {
   state = { web3: null, accounts: null, contract: null }
@@ -11,7 +11,7 @@ export default class Web3Container extends React.Component {
     try {
       const web3 = await getWeb3()
       const accounts = await getAccounts(web3)
-      const contract = await getContract(web3, StreamerFactory)
+      const contract = await getContract(web3, Streamer)
       this.setState({ web3, accounts, contract })
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`)
@@ -25,4 +25,4 @@ export default class Web3Container extends React.Component {
       ? this.props.render({ web3, accounts, contract })
       : this.props.renderLoading()
   }
-};
+}

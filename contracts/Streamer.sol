@@ -6,32 +6,6 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 
-
-contract StreamerFactory {
-
-	address[] public _deployedStreamers;
-
-	function deployStreamer(
-		string tokeName, 
-		string tokenSymbol, 
-		uint256 tokenSupply, 
-		uint256 tokenDecimals) public returns (address) {
-
-		address newStreamer = new Streamer(tokeName,tokenSymbol,tokenSupply,tokenDecimals);
-		_deployedStreamers.push(newStreamer);
-
-		return newStreamer;
-	}
-
-
-	function returnDeployed() public view returns (address[]) {
-		return _deployedStreamers;
-	}
-
-}
-
-
-
 /*
  *	@Title: Streamer
  *	
@@ -59,8 +33,8 @@ contract Streamer is Ownable{
 		string name;		/* subscribers username */
 	}
 
-	mapping (address => Subscriber) public subscribers;
 
+	mapping (address => Subscriber) public subscribers;
 
 
 	constructor(
@@ -125,12 +99,14 @@ contract Streamer is Ownable{
 	function subscribe(string name) public payable returns (bool) {
 
 		require(msg.value >= _cost);
-		require(subscribers[msg.sender].expiration <= block.timestamp);
+		require(subscribers[msg.sender].expiration <= now);
 
 		_subscription_wei.add(msg.value);
-		Subscriber memory to_push = Subscriber(0, 0, block.timestamp, msg.value,"",name);
+		Subscriber memory to_push = Subscriber(0, 0, now, msg.value,"",name);
 		subscribers[msg.sender] = to_push;
-		subscribers[msg.sender].expiration.div(_cost).mul(2629743).add(block.timestamp);
+		subscribers[msg.sender].expiration = subscribers[msg.sender].expiration.mul(2629744);
+		subscribers[msg.sender].expiration = subscribers[msg.sender].expiration.div(_cost);
+		subscribers[msg.sender].expiration = subscribers[msg.sender].expiration.add(now);
 
 		_streamer_token.transfer(msg.sender,_subsciber_token);
 
@@ -176,11 +152,11 @@ contract Streamer is Ownable{
 	 */
 	function donateToken(string message, uint256 amount) external returns (bool) {
 		require(_streamer_token.transfer(owner,amount) != false);
-		require(subscribers[msg.sender].expiration <= block.timestamp);
+		require(subscribers[msg.sender].expiration <= now);
 
-		subscribers[msg.sender].donation = subscribers[msg.sender].donation.add(amount);
-		subscribers[msg.sender].timer = block.timestamp;
-		subscribers[msg.sender].timer.add(3600);
+		subscribers[msg.sender].donation = amount;
+		subscribers[msg.sender].timer = now;
+		subscribers[msg.sender].timer = subscribers[msg.sender].timer.add(3600);
 		subscribers[msg.sender].message = message;
 		
 		return true;
@@ -208,7 +184,7 @@ contract Streamer is Ownable{
 
 
 	function requestRefund() external returns (bool) {
-		require( subscribers[msg.sender].timer < block.timestamp);
+		require( subscribers[msg.sender].timer < now);
 
 		refund(msg.sender,subscribers[msg.sender].donation);
 
