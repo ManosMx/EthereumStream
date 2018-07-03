@@ -3,22 +3,28 @@ import Link from 'next/link';
 import FactoryContainer from '../lib/FactoryContainer';
 
 class Home extends Component {
-
+  
   state = {
     deployed: false,
+    tokeName: "",
+    tokenAlias: "",
+    tokenAmount: 0,
+    tokenDecs: 0
   }
 
   // add arguments somehow
-  deployStreamer = async (tokeName, tokenAlias, tokenAmount, tokenDecs, event) => {
+  deployStreamer = async (event) => {
+    event.preventDefault()
+
     const { contract } = this.props
-    const address = await contract.deployStreamer.call()
-    this.setState({deployed: true})
-    console.log(address);
+    console.log(this.state.tokeName)
+    const address = await contract.deployStreamer(this.state.tokeName, this.state.tokenAlias, Number(this.state.tokenAmount), Number(this.state.tokenDecs))
+    console.log(address) 
   }
 
   getDeployed = async () => {
     const { accounts, contract } = this.props
-    const response = await contract.returnDeployed.call()
+    const response = await contract.returnDeployed()
     console.log(response)
   }
 
@@ -27,14 +33,14 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-        <form>
-          <input type="text" name="tokeName"/>
-          <input type="text" name="tokenAlias"/>
-          <input type="text" name="tokenAmount"/>
-          <input type="text" name="tokenDecs"/>
-          <input type="submit" value="Submit" />
+        <form onSubmit={this.deployStreamer}>
+          <input type="text" name="tokeName" onChange={event => this.setState({tokeName: event.target.value})}/>
+          <input type="text" name="tokenAlias" onChange={event => this.setState({tokenAlias: event.target.value})}/>
+          <input type="text" name="tokenAmount" onChange={event => this.setState({tokenAmount: event.target.value})}/>
+          <input type="text" name="tokenDecs" onChange={event => this.setState({tokenDecs: event.target.value})}/>
+          <input type="submit" value="Submit"/>
         </form>
-        <button onClick={this.deployStreamer}>Become a streamer with your own token</button>
+
         <button onClick={this.getDeployed}>Get available streamers</button>
       </div>
     )

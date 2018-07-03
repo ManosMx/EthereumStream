@@ -4,7 +4,7 @@ import getAccounts from './getAccounts'
 import getContract from './getContract'
 import StreamerFactory from '../../build/contracts/StreamerFactory.json'
 
-export default class Web3Container extends React.Component {
+export default class FactoryContainer extends React.Component {
   state = { web3: null, accounts: null, contract: null }
 
   async componentDidMount () {
@@ -14,7 +14,7 @@ export default class Web3Container extends React.Component {
       const contract = await getContract(web3, StreamerFactory)
       this.setState({ web3, accounts, contract })
     } catch (error) {
-      alert(`Failed to load web3, accounts, or contract. Check console for details.`)
+      alert('Failed to load web3, accounts, or contract. Check console for details.')
       console.log(error)
     }
   }
